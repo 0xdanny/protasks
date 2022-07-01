@@ -1,0 +1,38 @@
+name: protasks
+description: A todo list for pros.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  uuid: ^3.0.6
+  hooks_riverpod: ^1.0.4
+  flutter_hooks: ^0.18.5+1
+  shared_preferences: ^2.0.15
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  icons_launcher: ^1.2.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+
+flutter_icons:
+  image_path: "assets/images/icon.png"
+  android: true
+  ios: true
+  macos: true
+  windows: true
+  linux: true
+  web: true
