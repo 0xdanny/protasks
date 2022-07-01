@@ -80,47 +80,49 @@ class _HomeState extends ConsumerState<Home> {
     final todos = ref.watch(filteredTodos);
     final newTodoController = useTextEditingController();
 
-    return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
+    return Column(
       children: [
-        GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            body: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-              children: [
-                const Title(),
-                TextField(
-                  key: addTodoKey,
-                  controller: newTodoController,
-                  decoration: const InputDecoration(
-                    labelText: 'What needs to be done?',
-                  ),
-                  onSubmitted: (value) {
-                    ref.read(todoListProvider.notifier).add(value);
-                    newTodoController.clear();
-                  },
-                ),
-                const SizedBox(height: 42),
-                const Toolbar(),
-                const SizedBox(height: 12),
-                if (todos.isNotEmpty) const Divider(height: 0),
-                for (var i = 0; i < todos.length; i++) ...[
-                  if (i > 0) const Divider(height: 0),
-                  Dismissible(
-                    key: ValueKey(todos[i].id),
-                    onDismissed: (_) {
-                      ref.read(todoListProvider.notifier).remove(todos[i]);
-                    },
-                    child: ProviderScope(
-                      overrides: [
-                        _currentTodo.overrideWithValue(todos[i]),
-                      ],
-                      child: const TodoItem(),
+        Expanded(
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Scaffold(
+              body: ListView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                children: [
+                  const Title(),
+                  TextField(
+                    key: addTodoKey,
+                    controller: newTodoController,
+                    decoration: const InputDecoration(
+                      labelText: 'What needs to be done?',
                     ),
-                  )
+                    onSubmitted: (value) {
+                      ref.read(todoListProvider.notifier).add(value);
+                      newTodoController.clear();
+                    },
+                  ),
+                  const SizedBox(height: 42),
+                  const Toolbar(),
+                  const SizedBox(height: 12),
+                  if (todos.isNotEmpty) const Divider(height: 0),
+                  for (var i = 0; i < todos.length; i++) ...[
+                    if (i > 0) const Divider(height: 0),
+                    Dismissible(
+                      key: ValueKey(todos[i].id),
+                      onDismissed: (_) {
+                        ref.read(todoListProvider.notifier).remove(todos[i]);
+                      },
+                      child: ProviderScope(
+                        overrides: [
+                          _currentTodo.overrideWithValue(todos[i]),
+                        ],
+                        child: const TodoItem(),
+                      ),
+                    )
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

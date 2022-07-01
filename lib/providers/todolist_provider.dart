@@ -10,8 +10,6 @@ import 'sharedprefs_provider.dart';
 final todoListProvider = StateNotifierProvider<TodoList, List<Todo>>((ref) {
   final shareutil = ref.watch(sharedUtilityProvider);
   return TodoList(shareutil, const [
-    Todo(id: 'todo-0', description: 'hi'),
-    Todo(id: 'todo-1', description: 'hello'),
-    Todo(id: 'todo-2', description: 'bonjour'),
+    Todo(id: 'todo-0', description: 'example task'),
   ]);
 });

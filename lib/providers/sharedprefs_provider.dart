@@ -14,7 +14,12 @@ final sharedUtilityProvider = Provider<SharedUtility>((ref) {
 });
 
 const String sharedPrefTodoListKey = 'todolist';
-const String emptyJsonStringData = '{"data": []}';
+final demoTaskStringData = jsonEncode({
+  'data': [
+    const Todo(id: 'demoid1', description: 'example task'),
+    const Todo(id: 'demoid2', description: 'water plants')
+  ].map((todo) => todo.toJson()).toList(),
+});
 
 class SharedUtility {
   SharedUtility({
@@ -26,7 +31,7 @@ class SharedUtility {
   List<Todo> loadSharedTodoData() {
     Map<String, dynamic> stored = jsonDecode(
         sharedPreferences.getString(sharedPrefTodoListKey) ??
-            emptyJsonStringData);
+            demoTaskStringData);
     // iterate over the stored data and create a new list of todos
     return List<Todo>.from(stored['data']
         .map((todo) => Todo.fromJson(todo as Map<String, dynamic>)));
@@ -39,7 +44,7 @@ class SharedUtility {
       });
       sharedPreferences.setString(sharedPrefTodoListKey, todoListJson);
     } else {
-      sharedPreferences.setString(sharedPrefTodoListKey, emptyJsonStringData);
+      sharedPreferences.setString(sharedPrefTodoListKey, demoTaskStringData);
     }
   }
 }
